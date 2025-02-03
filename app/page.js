@@ -14,6 +14,13 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchTasks() {
       const response = await fetch("/api/tasks");
+      
+      // Handle errors if API call fails
+      if (!response.ok) {
+        console.error("Failed to fetch tasks");
+        return;
+      }
+      
       const data = await response.json();
       setTasks(data);
     }
@@ -24,6 +31,12 @@ export default function HomePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate new task data
+    if (!newTask.title || !newTask.dueDate) {
+      alert("Title and due date are required!");
+      return;
+    }
+
     const response = await fetch("/api/tasks", {
       method: "POST",
       headers: {
@@ -33,6 +46,13 @@ export default function HomePage() {
     });
 
     const newTaskData = await response.json();
+    
+    // Check for errors in response
+    if (!newTaskData._id) {
+      console.error("Failed to create task");
+      return;
+    }
+
     setTasks([...tasks, newTaskData]); // Add the new task to the list
     setNewTask({
       title: "",
@@ -43,14 +63,20 @@ export default function HomePage() {
 
   // Handle deleting a task
   const handleDelete = async (id) => {
-    await fetch("/api/tasks", {
+    const response = await fetch("/api/tasks", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id }),
     });
-    setTasks(tasks.filter((task) => task._id !== id)); // Remove task from UI
+
+    // Check if the deletion was successful
+    if (response.ok) {
+      setTasks(tasks.filter((task) => task._id !== id)); // Remove task from UI
+    } else {
+      console.error("Failed to delete task");
+    }
   };
 
   return (

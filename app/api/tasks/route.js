@@ -7,12 +7,15 @@ export async function GET() {
   try {
     await dbConnect();
     const tasks = await Task.find({});
-    
-    // Check if tasks are found
-    if (!tasks.length) {
-      return NextResponse.json({ message: "No tasks found" }, { status: 404 });
+
+    // Ensure that tasks is an array
+    if (!Array.isArray(tasks)) {
+      return NextResponse.json(
+        { error: "Tasks data is not an array" },
+        { status: 400 }
+      );
     }
-    
+
     return NextResponse.json(tasks);
   } catch (error) {
     console.error("Error fetching tasks:", error);
@@ -28,11 +31,13 @@ export async function POST(req) {
 
     // Validate input data
     if (!title || !description || !dueDate) {
-      return NextResponse.json({ error: "Title, description, and due date are required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Title, description, and due date are required" },
+        { status: 400 }
+      );
     }
 
     const newTask = await Task.create({ title, description, dueDate });
-    
     return NextResponse.json(newTask, { status: 201 });
   } catch (error) {
     console.error("Error creating task:", error);

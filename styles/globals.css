@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .tasks {
+    margin-top: 30px;
+  }
+  
+  .task {
+    padding: 15px;
+    background-color: #f4f4f4;
+    margin: 10px 0;
+    border-radius: 5px;
+  }
+  
+  .task h3 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+  
+  .task p {
+    margin: 5px 0;
+  }
+  
+  .task button {
+    background-color: #f44336;
+  }
+  
+  .task button:hover {
+    background-color: #d32f2f;
+  }
+  
